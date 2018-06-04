@@ -1,0 +1,14 @@
+Aim of rehab-track:
+To create a single system to track clients through a vocational and life
+rehabilitation program.
+
+Why rehab-track?
+Other systems, while coming close, didn't have the full package of what is
+needed to track clients, discipline, skills training, progress, assets, and
+various other things, such as auto-generation of roll calls, and study groups.
+
+What language?
+rehab-track will be written in Python3.6, using MySQL as the database
+
+Can I help?
+Sure, get hacking! Or buy me coffee!
