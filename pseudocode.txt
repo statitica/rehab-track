@@ -1,0 +1,185 @@
+pseudocode_rehab-track
+
+import the required modules for mysql, system, email
+
+create function reports
+    run mysql queries and generate reports for
+    area roll calls
+    mon_thurs roll call
+    youth group roll calls
+    combined roll calls
+    print reports
+
+create function add_staff
+    create form input
+    create new entry in staff table
+    add staff first name to staff.first_name
+    add staff last name to staff.last_name
+    add staff phone number to staff.phone
+
+create function new_boys
+    create form input
+    create new entry in boys table
+    add relevant data to fields
+    add data to intakes table
+
+create function leave
+    create form input
+    select client from combo list
+    deactivate by setting boys.isactive to false
+    create event in events table
+    add data to events table
+
+create function return_boys
+    create form input
+    select from combo list filtered by boys.isactive = false
+    on continue,
+        add to intakes
+        add to entry phase
+        add to events
+
+create function remove_staff
+    create form input
+    select active staff
+    set staff.isactive to false
+
+create function new_asset
+    create form input
+    add data to assets tables
+
+create function remove_asset
+    create form input
+    select asset from combo box
+    set asset.isactive to false
+
+create function discipline
+    create form input
+    generate and display discipline record report
+    select boys from boys table with combo
+    select offense type, or create new
+    select discipline type
+    add to discipline history
+        check previous history for boy
+        check last intake date
+        if discipline is weekend work
+            if third, sixth, or ninth weekend work
+            add weekend work to record
+            add strike to record
+            call function strike_check
+        if discipline is strike
+            call function strike_check
+        if discipline is suspension
+            call function suspend
+        if discipline is termination
+            call function terminate
+
+create function strike_check
+      if third strike since last intake
+      create warning that boy has three strikes and should be suspended
+      on continue
+          call function suspend
+      otherwise
+          generate report of discipline record for boy
+          email report to managers
+
+create function suspend
+    create event in events table
+    set boys.isactive to false
+    take suspend_time input
+    add return_date by adding suspend_time to date of suspension
+
+create function terminate
+    create event in events table
+    set boys.isactive to false
+    render permanently inactive
+
+create function phase_move_sheets
+    for each active boy
+        check phase entry date
+        if boy in candidate
+            if phase start date >= 1 month previous
+                generate phase assessment sheet
+        if boy in phase 1
+            if phase start date >= 2 months previous
+                generate phase assessment sheet
+        if boy in phase 2
+            if start date >= 4 months previous
+                generate phase assessment sheet
+            if start date >= 2 months previous
+                generate phase 2 area move sheet
+        if boy in phase 3
+            if start date >= 3 months
+                generate phase assessment sheet
+        if boy in phase 4
+            if start date >= 3 months
+                generate phase assessment sheet
+
+create function phase_moves
+    for each active boy who is eligible
+        generate form
+        if moving up
+            add to history
+            place in area
+
+create function phase2 area move
+    for each phase2 who is eligible to move areas
+        generate form
+        if moving area
+            add to history
+            place in new area
+
+create function skills
+    select boy
+    add data to skills table
+
+create function add_skills
+    generate form
+    select skill type, or add new
+    try add new skill
+        if new skill already exists
+            present error and do not adding
+        else
+            add new skill
+
+create function connect
+    connect to mysql database
+
+create function new_database
+    create new mysql database
+
+create function export
+    create spreadsheet for all boys data
+    create spreadsheet for all staff data
+    create spreadsheet for all assets
+
+
+create function start
+    present choice
+    if open existing
+        call function connect
+    if new
+        call function new_database
+    if export data
+        call function export
+    if exit
+        exit
+    call main_menu with database as argument
+
+create function main_menu
+    check day of the week
+    if day is tuesday
+        present option to handle discipline cases
+        if yes
+            call function discipline
+        present number of free beds on pop-up window
+    if day is wednesday
+        present option to generate and print roll calls
+        if yes
+            call function reports
+    present choice
+    if new boys
+        call function new_boys
+    if return boys
+        call function return_boys
+    if discipline
+        call function discipline_menu
