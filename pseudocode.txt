@@ -183,3 +183,6 @@ create function main_menu
         call function return_boys
     if discipline
         call function discipline_menu
+	if boys_management
+		call function boys_menu
+	
